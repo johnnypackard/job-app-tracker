@@ -29,19 +29,24 @@
     "redux-saga": "^0.16.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
+    "client": "react-scripts start",
+    "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "nodemon": "^1.17.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/johnnypackard/job-app-tracker.git"
   },
-  "author": "",
+  "author": "Johnny Packard",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/johnnypackard/job-app-tracker/issues"
