@@ -3,5 +3,5 @@
 [] add InfoPage component 
 [] add LoginPage component 
 [] add Nav component 
-[] add RegisterPage component 
+[x] add RegisterPage component 
 [] add UserPage component 
