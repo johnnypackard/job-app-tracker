@@ -16,7 +16,7 @@ function* loginUser(action) {
         });
     } catch (error) {
         yield put({
-            type: LOGIN_ACTION.LOGIN_REQUEST_DONE,
+            type: LOGIN_ACTIONS.LOGIN_REQUEST_DONE,
         });
         if (error.status === 401) {
             yield put({

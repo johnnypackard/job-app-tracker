@@ -29,11 +29,11 @@ const App = () => (
           component={RegisterPage}
         />
         <Route
-          path="user"
+          path="/user"
           component={UserPage}
         />
         <Route
-          path="info"
+          path="/info"
           component={InfoPage}
         />
         <Route render={() => <h1>404</h1>} />

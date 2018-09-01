@@ -59,7 +59,7 @@ class LoginPage extends Component {
     }
 
     render() {
-        returm (
+        return (
             <div>
                 { this.renderAlert() }
                 <form onSubmit={this.login}>
@@ -72,7 +72,7 @@ class LoginPage extends Component {
                                 name="username"
                                 value={this.state.username}
                                 onChange={this.handleInputChangeFor('username')}
-                        />
+                            />
                         </label>
                     </div>
                     <div>

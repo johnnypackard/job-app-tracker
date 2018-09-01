@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessionMiddleware);
 
 // start Passport sessions
-app.use(passpor.initialize());
+app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes

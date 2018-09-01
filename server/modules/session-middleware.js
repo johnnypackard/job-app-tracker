@@ -9,7 +9,7 @@ const serverSessionSecret = () => {
         process.env.SERVER_SESSION_SECRET === warnings.exampleBadSecret) {
 
             // if user doesn't have a good secret, gives warning
-            console.log(warnings.badSecret);
+        console.log(warnings.badSecret);
     }
     
     return process.env.SERVER_SESSION_SECRET;
