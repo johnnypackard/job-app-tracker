@@ -4,4 +4,4 @@
 [x] add LoginPage component 
 [x] add Nav component 
 [x] add RegisterPage component 
-[] add UserPage component 
+[x] add UserPage component 
