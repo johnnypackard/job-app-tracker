@@ -6,38 +6,57 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
-// Ajax GET request for user info if user is authenticated
+// Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
-    // Send back user object from db
-    res.send(req.user);
+  // Send back user object from database
+  res.send(req.user);
 });
 
-// POST request with new user data
-// encrypting password with HASH before being inserted into db
-router.post('/register', (req, res, next) => {
-    console.log('req: ', req.body);
-    
-    const username = req.body.username;
-    const password  = encryptLib.encryptPassword(req.body.password);
-    
-    const queryText = 'INSERT INTO person (username, password) VALUES ($1, $2) RETURNING id';
-    pool.query(queryText, [username, password])
-        .then(() => { res.sendStatus(201); })
-        .catch((err) => { next(err); });
+// Handles POST request with new user data
+// The only thing different from this and every other post we've seen
+// is that the password gets encrypted before being inserted
+router.post('/register', (req, res, next) => {  
+  const username = req.body.username;
+  const password = encryptLib.encryptPassword(req.body.password);
+  const type = "user";
+  const email = req.body.email;
+  const validated = true;
+  const bio = req.body.bio;
+  const contact_info = req.body.contact_info;
+  const queryText = `INSERT INTO users (username, hash, type, email, validated) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+  pool.query(queryText, [username, password, type, email, validated])
+    .then((result)=> {
+      const user_id = result.rows[0].id;
+      const profileQueryText = `INSERT INTO profiles (user_id, bio, contact_info) VALUES ($1, $2, $3)`
+      pool.query(profileQueryText, [user_id, bio, contact_info]).then(()=>{
+        console.log('user profile created');
+        res.sendStatus(201);
+      }).catch((error)=>{
+        console.log('error creating user profile:', error);
+        res.sendStatus(500);
+      })
+    })
+    .catch((err) => {
+      console.log('error creating user:', err);
+      res.sendStatus(500);})      
+    ;
 });
 
-// Login form authentication/login POST
-// userStrategy.authenticate('local') is middleware running on this route
-// will run POST if successful
-// will send 404 if unsuccessful
+
+
+// Handles login form authenticate/login POST
+// userStrategy.authenticate('local') is middleware that we run on this route
+// this middleware will run our POST if successful
+// this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
-    res.sendStatus(200);
+  res.sendStatus(200);
 });
 
-// clear server session info about user
+// clear all server session information about this user
 router.get('/logout', (req, res) => {
-    req.logout(); // <----- PassportJS built-in method of logging user out
-    res.sendStatus(200);
+  // Use passport's built-in method to log out the user
+  req.logout();
+  res.sendStatus(200);
 });
 
 module.exports = router;

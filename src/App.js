@@ -16,7 +16,7 @@ import './styles/main.css';
 
 const App = () => (
   <div>
-    <Header title="Application Tracker" />
+    <Header title="Project Base" />
     <Router>
       <Switch>
         <Redirect exact from="/" to="/home" />
@@ -36,7 +36,9 @@ const App = () => (
           path="/info"
           component={InfoPage}
         />
+        {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
+
       </Switch>
     </Router>
   </div>

@@ -1,12 +1,13 @@
-const rejectUnathenticated = (req, res, next) => {
-    // checking if logged in
-    if (req.isAuthenticated()) {
-        // user authenticated, successful login
-        next();
-    } else {
-        // user not authenticated
-        res.sendStatus(403);
-    }
+const rejectUnauthenticated = (req, res, next) => {
+  // check if logged in
+  if (req.isAuthenticated()) {
+    // They were authenticated! User may do the next thing
+    // Note! They may not be Authorized to do all things
+    next();
+  } else {
+    // failure best handled on the server. do redirect here.
+    res.sendStatus(403);
+  }
 };
 
-module.exports = { rejectUnathenticated };
+module.exports = { rejectUnauthenticated };

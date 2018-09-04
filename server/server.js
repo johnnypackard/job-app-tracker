@@ -1,3 +1,4 @@
+
 const express = require('express');
 require('dotenv').config();
 
@@ -7,28 +8,30 @@ const sessionMiddleware = require('./modules/session-middleware');
 
 const passport = require('./strategies/user.strategy');
 
+// Route includes
 const userRouter = require('./routes/user.router');
 
+// Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Passport session config
+// Passport Session Configuration //
 app.use(sessionMiddleware);
 
-// start Passport sessions
+// start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
+/* Routes */
 app.use('/api/user', userRouter);
 
-// serve static files
+// Serve static files
 app.use(express.static('build'));
 
-// Server port
+// App Set //
 const PORT = process.env.PORT || 5000;
 
-// spin up server
+/** Listen * */
 app.listen(PORT, () => {
-    console.log(`spinning server on port: ${PORT}`); 
+  console.log(`Listening on port: ${PORT}`);
 });

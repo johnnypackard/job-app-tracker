@@ -1,6 +1,5 @@
 const badSecret = `
-
---------------------------
+----------------------------
 
 *** WARNING ***
 Your application is not very secure.
@@ -11,14 +10,14 @@ It should be
 - longer than 8 characters
 - not "superDuperSecret"
 
-If this warning is showing on you deployed app,
+If this warning is showing on Heroku,
 add or change your SERVER_SESSION_SECRET environment variable!
 
---------------------------`;
+----------------------------`;
 
 const exampleBadSecret = 'superDuperSecret';
 
 module.exports = {
-    badSecret,
-    exampleBadSecret,
+  badSecret,
+  exampleBadSecret,
 };

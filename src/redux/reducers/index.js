@@ -3,8 +3,8 @@ import user from './userReducer';
 import login from './loginReducer';
 
 const store = combineReducers({
-    user,
-    login,
+  user,
+  login,
 });
 
 export default store;
