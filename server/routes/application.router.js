@@ -85,3 +85,38 @@ router.get('/phase', (req, res) => {
 });
 
 // inserts into locations, returns id, then inserts into job_tracker table
+router.post('/', (req, res) => {
+    const address = req.body.address;
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+    const queryText = `INSERT INTO locations(address, lat, lng) VALUES ($1, $2, $3) RETURNING id;`
+    pool.query(queryText, [address, lat, lng])
+    .then((result) => {
+        const location_id = result.rows[0].id;
+        const user_id = req.body.user_id;
+        const date_applied = req.body.date_applied;
+        const follow_up_date  = req.body.follow_up_date;
+        const job_title = req.body.job_title;
+        const job_type = req.body.job_type;
+        const application_phase = req.body.application_phase;
+        const company_contact = req.body.company_contact;
+        const company_name = req.body.company_name;
+        const company_url = req.body.company_url;
+        const comments = req.body.comments;
+        const applicationQueryText = `INSERT INTO job_tracker(location_id, user_id, date_applied, follow_up_date, job_title, job_type, application_phase, company_contact, company_name, company_url, comments)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
+        pool.query(applicationQueryText, [location_id, user_id, date_applied, follow_up_date, job_title, job_type, application_phase, company_contact, company_name, company_url, comments])
+        .then(() => {
+            console.log('application added successfully');
+            res.sendStatus(201);
+        }).catch((error) => {
+            console.log('error adding application: ', error);
+            res.sendStatus(500);
+        })
+    }).catch((error) => {
+        console.log('error adding location: ', error);
+        res.sendStatus(500);
+    })
+});
+
+// TODO add router.put && router.delete
