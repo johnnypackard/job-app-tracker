@@ -120,3 +120,5 @@ router.post('/', (req, res) => {
 });
 
 // TODO add router.put && router.delete
+
+module.exports = router;
